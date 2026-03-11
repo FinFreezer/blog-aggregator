@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	commands "github.com/finfreezer/blogAggregator/internal/commands"
-	config "github.com/finfreezer/blogAggregator/internal/config"
-	"github.com/finfreezer/blogAggregator/internal/database"
+	commands "github.com/finfreezer/blog-aggregator/internal/commands"
+	config "github.com/finfreezer/blog-aggregator/internal/config"
+	"github.com/finfreezer/blog-aggregator/internal/database"
 	_ "github.com/lib/pq"
 )
 
