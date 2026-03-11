@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 	"time"
 
 	c "github.com/finfreezer/blogAggregator/internal/config"
@@ -36,6 +37,34 @@ func MiddlewareLoggedIn(handler func(s *State, cmd Command, user database.User) 
 
 		return handler(s, cmd, user)
 	}
+}
+
+func HandlerBrowsePosts(s *State, cmd Command) error {
+	var limit int32 = 2
+	if len(cmd.Args) != 0 {
+		newLimit, err := strconv.ParseInt(cmd.Args[0], 10, 32)
+		if err != nil {
+			return fmt.Errorf("Error converting limit argument: %w\n", err)
+		}
+		limit = int32(newLimit)
+	}
+
+	posts, err := s.Db.GetPostsForUser(context.Background(), limit)
+	if err != nil {
+		return fmt.Errorf("Problem gathering posts for user: %w\n", err)
+	}
+	for _, post := range posts {
+		fmt.Println(post.Title)
+	}
+	return nil
+}
+
+func HandlerResetPosts(s *State, cmd Command) error {
+	err := s.Db.DeletePosts(context.Background())
+	if err != nil {
+		return fmt.Errorf("Something went wrong deleting posts: %w", err)
+	}
+	return nil
 }
 
 func HandlerScrape(s *State, cmd Command) error {

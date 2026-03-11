@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/finfreezer/blogAggregator/internal/database"
 )
 
@@ -67,17 +69,44 @@ func scrapeFeeds(s *State) error {
 	s.Db.MarkFeedFetched(context.Background(), database.MarkFeedFetchedParams{
 		LastFetchedAt: sql.NullTime{Time: time.Now(), Valid: true},
 		UpdatedAt:     time.Now(),
-		ID:            nextFeed.ID},
+		ID:            nextFeed.ID,
+	},
 	)
 	feed, err := fetchFeed(context.Background(), nextFeed.Url)
 	if err != nil {
 		return fmt.Errorf("Error fetching feed: %w", err)
 	}
 
-	fmt.Printf("Reading feed from %s\n", nextFeed.Url)
+	describParam := sql.NullString{}
+
+	for _, item := range feed.Channel.Item {
+		if item.Description != "" {
+			describParam = sql.NullString{String: item.Description, Valid: true}
+		} else {
+			describParam = sql.NullString{String: "", Valid: false}
+		}
+		pubTime, err := time.Parse(time.RFC1123Z, item.PubDate)
+		if err != nil {
+			fmt.Println(fmt.Errorf("Something went wrong parsing timestamp: %w", err))
+		}
+		fID, err := s.Db.GetFeedByURL(context.Background(), item.Link)
+		params := database.CreatePostParams{
+			ID:          uuid.New(),
+			CreatedAt:   time.Now(),
+			UpdatedAt:   time.Now(),
+			Title:       item.Title,
+			Url:         item.Link,
+			Description: describParam,
+			PublishedAt: pubTime,
+			FeedID:      fID.ID,
+		}
+		s.Db.CreatePost(context.Background(), params)
+	}
+
+	/*fmt.Printf("Reading feed from %s\n", nextFeed.Url)
 	for _, item := range feed.Channel.Item {
 		fmt.Println(item.Title)
 	}
-	fmt.Printf("\n\n")
+	fmt.Printf("\n\n")*/
 	return nil
 }
