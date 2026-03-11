@@ -12,7 +12,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/finfreezer/blog-aggregator/internal/database"
+	"github.com/finfreezer/gator/internal/database"
 )
 
 type RSSFeed struct {

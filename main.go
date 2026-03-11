@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	commands "github.com/finfreezer/blog-aggregator/internal/commands"
-	config "github.com/finfreezer/blog-aggregator/internal/config"
-	"github.com/finfreezer/blog-aggregator/internal/database"
+	commands "github.com/finfreezer/gator/internal/commands"
+	config "github.com/finfreezer/gator/internal/config"
+	"github.com/finfreezer/gator/internal/database"
 	_ "github.com/lib/pq"
 )
 

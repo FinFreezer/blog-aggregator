@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"time"
 
-	c "github.com/finfreezer/blog-aggregator/internal/config"
-	"github.com/finfreezer/blog-aggregator/internal/database"
+	c "github.com/finfreezer/gator/internal/config"
+	"github.com/finfreezer/gator/internal/database"
 	"github.com/google/uuid"
 )
 

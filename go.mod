@@ -1,4 +1,4 @@
-module github.com/finfreezer/blog-aggregator
+module github.com/finfreezer/gator
 
 go 1.25.1
 
