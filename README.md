@@ -25,11 +25,14 @@ will also use this to track the logger-in user under the hood.
 ```
 
 ## Usage
+
+### Getting Started
 To begin using the program, you can register a new user with `gator register {username}`.
 
 Or change registered users with `gator login {username}`.
 
-To start using the program, you can add an RSS feed with `gator addfeed {name} {feed_url}`, which is automatically
+### Using the program
+Once you've registered at least one user, you can add an RSS feed with `gator addfeed {name} {feed_url}`, which is automatically
 added into the current logged-in user's followed feeds.
 
 By using `gator agg {[number]{s|m|h}}`, the program will begin pulling articles from the feeds every time
