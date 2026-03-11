@@ -8,7 +8,7 @@ This project requires both
 
 On Linux: `sudo apt install postgresql postgresql-contrib`
 
-For Go, on Linux-based systems you can find quick instructions also on https://webinstall.dev/golang/
+For Go on Linux, you can also use [webinstall](https://webinstall.dev/golang/)
 
 ## Installation
 ```bash
@@ -17,7 +17,7 @@ go install github.com/finfreezer/gator@latest
 
 ## Configuration
 Set up a configuration file in your home directory called .gatorconfig.json that includes the database url you wish to use, the program
-will also use this to track the logger-in user under the hood.
+will also use this to track the logged-in user under the hood.
 ```json
 {
   "db_url": "postgres://username:password@localhost:5432/gator?sslmode=disable"
